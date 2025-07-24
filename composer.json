@@ -1,0 +1,5 @@
+{
+    "require": {
+        "omegaalfa/wrouter": "^1.0"
+    }
+}
