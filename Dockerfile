@@ -25,7 +25,6 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     git \
-    mysql-client \
     && rm -rf /var/lib/apt/lists/*
 
 # Instala Composer
