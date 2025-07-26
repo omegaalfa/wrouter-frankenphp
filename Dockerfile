@@ -14,7 +14,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git unzip libzip-dev zlib1g-dev libicu-dev libgmp-dev libtidy-dev libssh2-1-dev \
     libjpeg-dev libpng-dev libfreetype6-dev libwebp-dev libxpm-dev && \
     install-php-extensions \
-    intl \
     pdo_mysql \
     zip \
     opcache \
