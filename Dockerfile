@@ -21,11 +21,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     pcntl \
     bcmath \
     redis \
-    gmp \
-    tidy \
-    exif \
-    gd \
-    ssh2 && \
+    gd && \
     rm -rf /var/lib/apt/lists/*
 
 # Instala Composer
