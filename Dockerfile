@@ -4,8 +4,7 @@ LABEL org.opencontainers.image.title="WRouter App Docker" \
       org.opencontainers.image.description="Docker image for PHP 8.4 + FrankenPHP + Redis + MySQL + WRouter" \
       org.opencontainers.image.authors="omegalfa"
 
-
-# Instala dependências do sistema + extensões PHP
+# Instala extensões PHP
 RUN install-php-extensions \
     pdo_mysql \
     mysqli \
@@ -19,7 +18,7 @@ RUN install-php-extensions \
     xml \
     curl
 
-# Instalar dependências do sistema (se necessário)
+# Dependências do sistema
 RUN apt-get update && apt-get install -y \
     curl \
     zip \
@@ -30,11 +29,19 @@ RUN apt-get update && apt-get install -y \
 # Instala Composer
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
-# php.ini customizado
+# Configurações PHP e Caddy
 COPY docker/php.ini /usr/local/etc/php/php.ini
-
-# Configuração do FrankenPHP (Caddyfile)
 COPY docker/frankenphp.conf /etc/frankenphp/Caddyfile
 
-# Diretório de trabalho
+# Define diretório da app
 WORKDIR /app
+
+# Copia o projeto para dentro da imagem
+COPY . /app
+
+# Instala dependências PHP para produção
+RUN composer install --no-dev --optimize-autoloader --no-interaction
+
+# (Opcional) Limpa .git e ajusta permissões
+RUN rm -rf .git \
+    && chown -R www-data:www-data /app

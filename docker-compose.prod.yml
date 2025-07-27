@@ -9,8 +9,6 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    volumes:
-      - .:/app
     working_dir: /app
     restart: unless-stopped
     depends_on:
@@ -32,8 +30,8 @@ services:
     read_only: true
     tmpfs:
       - /tmp
-    mem_limit: 1024m
-    cpus: 0.9
+    mem_limit: 512m
+    cpus: 0.5
 
   redis:
     image: redis:alpine
