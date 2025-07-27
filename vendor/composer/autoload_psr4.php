@@ -8,6 +8,6 @@ $baseDir = dirname($vendorDir);
 return array(
     'Psr\\Http\\Server\\' => array($vendorDir . '/psr/http-server-middleware/src', $vendorDir . '/psr/http-server-handler/src'),
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-factory/src', $vendorDir . '/psr/http-message/src'),
-    'Omegaalfa\\Wrouter\\' => array($vendorDir . '/omegaalfa/wrouter/src'),
+    'Omegaalfa\\Wrouter\\' => array($baseDir . '/app', $vendorDir . '/omegaalfa/wrouter/src'),
     'Laminas\\Diactoros\\' => array($vendorDir . '/laminas/laminas-diactoros/src'),
 );

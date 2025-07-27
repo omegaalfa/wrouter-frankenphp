@@ -9,6 +9,7 @@ LABEL org.opencontainers.image.title="WRouter App Docker" \
 RUN install-php-extensions \
     pdo_mysql \
     mysqli \
+    redis \
     opcache \
     zip \
     gd \
