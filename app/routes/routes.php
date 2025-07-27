@@ -1,5 +1,6 @@
 <?php
 
+namespace App;
 
 use Omegaalfa\Wrouter\Router\Wrouter;
 use Laminas\Diactoros\Response;
