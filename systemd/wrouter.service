@@ -1,0 +1,24 @@
+[Unit]
+Description=Serviço Docker Compose para WRouter
+After=network-online.target docker.service
+Wants=network-online.target
+Requires=docker.service
+
+[Service]
+Type=notify
+NotifyAccess=all
+WorkingDirectory=/home/ubuntu/wrouter-frankenphp
+ExecStart=/usr/local/bin/docker-compose -f docker-compose.prod.yml up -d
+ExecStop=/usr/local/bin/docker-compose -f docker-compose.prod.yml down
+TimeoutStartSec=0
+RemainAfterExit=yes
+
+# Watchdog e reinício automático
+Restart=on-failure
+RestartSec=10s
+StartLimitIntervalSec=60s
+StartLimitBurst=5
+WatchdogSec=60s
+
+[Install]
+WantedBy=multi-user.target

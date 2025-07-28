@@ -1,15 +1,22 @@
 #!/bin/bash
-set -e
 
-echo "🚀 Iniciando build e deploy da aplicação..."
+SERVICE_NAME="wrouter.service"
+SERVICE_SRC="systemd/$SERVICE_NAME"
+SERVICE_DST="/etc/systemd/system/$SERVICE_NAME"
 
-# Recarrega variáveis do .env
-if [ -f .env ]; then
-  export $(grep -v '^#' .env | xargs)
+echo "🔧 Instalando $SERVICE_NAME ..."
+
+# Verifica se o arquivo existe
+if [ ! -f "$SERVICE_SRC" ]; then
+  echo "❌ Arquivo $SERVICE_SRC não encontrado!"
+  exit 1
 fi
 
-docker compose -f docker-compose.prod.yml down
-docker compose -f docker-compose.prod.yml build --no-cache
-docker compose -f docker-compose.prod.yml up -d
+# Copia o serviço para o systemd
+sudo cp "$SERVICE_SRC" "$SERVICE_DST"
+sudo systemctl daemon-reexec
+sudo systemctl daemon-reload
+sudo systemctl enable "$SERVICE_NAME"
+sudo systemctl restart "$SERVICE_NAME"
 
-echo "✅ Deploy finalizado com sucesso!"
+echo "✅ Serviço $SERVICE_NAME instalado e iniciado com sucesso."
