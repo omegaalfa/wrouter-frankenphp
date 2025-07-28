@@ -31,7 +31,7 @@ $router->get('/frankephp', function (Request $request, ResponseInterface $respon
 });
 
 $router->get('/rota/php/info', function (Request $request, ResponseInterface $response) {
-    $response->getBody()->write(phpinfo());
+    $response->getBody()->write('phpinfo()');
     return $response;
 });
 
