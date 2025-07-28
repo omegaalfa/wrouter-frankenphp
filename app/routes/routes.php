@@ -30,6 +30,10 @@ $router->get('/frankephp', function (Request $request, ResponseInterface $respon
     return $response;
 });
 
+$router->get('/rota/php/info', function (Request $request, ResponseInterface $response) {
+    $response->getBody()->write(phpinfo());
+    return $response;
+});
 
 // Dispatcher
 $path = $request->getUri()->getPath();
