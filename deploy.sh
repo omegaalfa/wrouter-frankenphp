@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SERVICE_NAME="wrouter.service"
-SERVICE_SRC="systemd/$SERVICE_NAME"
+SERVICE_SRC="./systemd/$SERVICE_NAME"  # Corrigido: caminho relativo
 SERVICE_DST="/etc/systemd/system/$SERVICE_NAME"
 
 echo "🔧 Instalando $SERVICE_NAME ..."
@@ -9,14 +9,23 @@ echo "🔧 Instalando $SERVICE_NAME ..."
 # Verifica se o arquivo existe
 if [ ! -f "$SERVICE_SRC" ]; then
   echo "❌ Arquivo $SERVICE_SRC não encontrado!"
+  echo "📁 Diretório atual: $(pwd)"
+  echo "📁 Conteúdo do diretório:"
+  ls -la ./systemd/ 2>/dev/null || echo "Diretório systemd não encontrado"
   exit 1
 fi
 
 # Copia o serviço para o systemd
 sudo cp "$SERVICE_SRC" "$SERVICE_DST"
-sudo systemctl daemon-reexec
 sudo systemctl daemon-reload
 sudo systemctl enable "$SERVICE_NAME"
 sudo systemctl restart "$SERVICE_NAME"
 
-echo "✅ Serviço $SERVICE_NAME instalado e iniciado com sucesso."
+# Verifica o status
+if sudo systemctl is-active --quiet "$SERVICE_NAME"; then
+  echo "✅ Serviço $SERVICE_NAME instalado e iniciado com sucesso."
+else
+  echo "❌ Falha ao iniciar o serviço $SERVICE_NAME"
+  sudo systemctl status "$SERVICE_NAME"
+  sudo journalctl -u "$SERVICE_NAME" --no-pager -n 20
+fi
