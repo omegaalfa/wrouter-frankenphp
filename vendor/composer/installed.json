@@ -93,17 +93,17 @@
         },
         {
             "name": "omegaalfa/wrouter",
-            "version": "v1.0.2",
-            "version_normalized": "1.0.2.0",
+            "version": "v1.0.3",
+            "version_normalized": "1.0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/omegaalfa/wrouter.git",
-                "reference": "ca3c18e2253948bb605dd3f616a87e973ee9d137"
+                "reference": "20d5dc0fa2b464f6da3705182bde66078329ab1e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/omegaalfa/wrouter/zipball/ca3c18e2253948bb605dd3f616a87e973ee9d137",
-                "reference": "ca3c18e2253948bb605dd3f616a87e973ee9d137",
+                "url": "https://api.github.com/repos/omegaalfa/wrouter/zipball/20d5dc0fa2b464f6da3705182bde66078329ab1e",
+                "reference": "20d5dc0fa2b464f6da3705182bde66078329ab1e",
                 "shasum": ""
             },
             "require": {
@@ -116,12 +116,12 @@
                 "psr/http-server-middleware": "^1.0"
             },
             "require-dev": {
-                "phpstan/phpstan": "^1.11",
-                "phpunit/phpunit": "^10.0"
+                "phpstan/phpstan": "^1.11 || ^2.0",
+                "phpunit/phpunit": "^10.0 || ^12.0"
             },
-            "time": "2025-07-07T01:29:05+00:00",
+            "time": "2025-07-30T22:58:07+00:00",
             "type": "library",
-            "installation-source": "dist",
+            "installation-source": "source",
             "autoload": {
                 "psr-4": {
                     "Omegaalfa\\Wrouter\\": "src/"
@@ -159,7 +159,7 @@
             ],
             "support": {
                 "issues": "https://github.com/omegaalfa/wrouter/issues",
-                "source": "https://github.com/omegaalfa/wrouter/tree/v1.0.2"
+                "source": "https://github.com/omegaalfa/wrouter/tree/v1.0.3"
             },
             "install-path": "../omegaalfa/wrouter"
         },
