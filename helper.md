@@ -37,4 +37,19 @@ sudo journalctl --vacuum-time=1d
 
 ```bash
 sudo journalctl -u wrouter.service -f
+```
 
+# Crie o diretório de plugins (caso não exista):
+```bash
+mkdir -p ~/.docker/cli-plugins
+
+```
+
+# Baixe o binário do Compose v2:
+```bash
+curl -SL https://github.com/docker/compose/releases/download/v2.27.0/docker-compose-linux-x86_64 -o ~/.docker/cli-plugins/docker-compose
+```
+
+# Dê permissão de execução:
+```bash
+chmod +x ~/.docker/cli-plugins/docker-compose

@@ -5,17 +5,20 @@ Wants=network-online.target
 Requires=docker.service
 
 [Service]
-Type=exec
+Type=notify
+NotifyAccess=all
 WorkingDirectory=/home/ubuntu/wrouter-frankenphp
-ExecStart=/usr/bin/docker-compose -f docker-compose.prod.yml up -d
-ExecStop=/usr/bin/docker-compose -f docker-compose.prod.yml down
+ExecStart=/usr/bin/docker compose -f docker-compose.prod.yml up -d --build
+ExecStop=/usr/bin/docker compose -f docker-compose.prod.yml down
 TimeoutStartSec=0
 RemainAfterExit=yes
 
+# Watchdog e reinício automático
 Restart=on-failure
 RestartSec=10s
-StartLimitInterval=60s
+StartLimitIntervalSec=60s
 StartLimitBurst=5
+WatchdogSec=60s
 
 [Install]
 WantedBy=multi-user.target
