@@ -29,16 +29,35 @@ RUN apt-get update && apt-get install -y \
 # Instala Composer
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
-# Configurações PHP e Caddy
-COPY docker/php.ini /usr/local/etc/php/php.ini
-COPY docker/frankenphp.conf /etc/frankenphp/Caddyfile
-
-# Instala dependências PHP para produção
-RUN composer install --no-dev --optimize-autoloader --no-interaction
-
-# (Opcional) Limpa .git e ajusta permissões
-RUN rm -rf .git \
-    && chown -R www-data:www-data /app
-
 # Define diretório da app
 WORKDIR /app
+
+# CACHE INTELIGENTE: Copia apenas composer.json primeiro
+COPY composer.json composer.lock* ./
+
+# Instala dependências PHP para produção (será cacheado se composer.json não mudar)
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
+
+# Executa scripts pós-instalação se necessário
+RUN composer run-script --no-dev post-install-cmd || true
+
+# Cria diretórios necessários com permissões adequadas
+RUN mkdir -p /app/storage/logs /app/storage/cache /app/storage/sessions \
+    && chown -R www-data:www-data /app/storage \
+    && chmod -R 775 /app/storage
+
+# Configurações PHP
+COPY docker/php.ini /usr/local/etc/php/php.ini
+
+# Configuração do FrankenPHP/Caddy
+COPY docker/frankenphp.conf /etc/frankenphp/Caddyfile
+
+# Ajusta permissões do diretório base
+RUN chown -R www-data:www-data /app \
+    && chmod -R 755 /app
+
+# Expõe portas
+EXPOSE 80 443
+
+# Comando padrão
+CMD ["frankenphp", "run", "--config", "/etc/frankenphp/Caddyfile"]
