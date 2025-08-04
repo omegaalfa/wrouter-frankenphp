@@ -33,15 +33,12 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 COPY docker/php.ini /usr/local/etc/php/php.ini
 COPY docker/frankenphp.conf /etc/frankenphp/Caddyfile
 
-# Define diretório da app
-WORKDIR /app
-
-# Copia o projeto para dentro da imagem
-COPY . /app
-
 # Instala dependências PHP para produção
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 # (Opcional) Limpa .git e ajusta permissões
 RUN rm -rf .git \
     && chown -R www-data:www-data /app
+
+# Define diretório da app
+WORKDIR /app

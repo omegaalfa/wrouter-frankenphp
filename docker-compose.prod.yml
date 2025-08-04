@@ -6,6 +6,8 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: wrouter_app
+    volumes:
+      - .:/app
     ports:
       - "80:80"
       - "443:443"
