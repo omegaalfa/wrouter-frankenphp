@@ -53,3 +53,15 @@ curl -SL https://github.com/docker/compose/releases/download/v2.27.0/docker-comp
 # Dê permissão de execução:
 ```bash
 chmod +x ~/.docker/cli-plugins/docker-compose
+```
+
+### Build inicial (uma vez só)
+docker compose -f docker-compose.prod.yml up -d --build
+
+### Edite arquivos normalmente - mudanças aparecem na hora!
+
+### Só rebuilda se mudar composer.json ou Dockerfile
+docker compose -f docker-compose.prod.yml build --no-cache app
+
+### Para adicionar nova dependência
+docker compose -f docker-compose.prod.yml exec app composer require nova/dependencia

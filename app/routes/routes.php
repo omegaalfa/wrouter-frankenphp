@@ -27,13 +27,16 @@ $router->get('/', function (Request $request, ResponseInterface $response) {
 
 $router->get('/frankephp', function (Request $request, ResponseInterface $response) {
     $response->getBody()->write('Pagina frankephp');
+
     return $response;
 });
 
 $router->get('/rota/php/info', function (Request $request, ResponseInterface $response) {
     $response->getBody()->write('phpinfo()');
     return $response;
-});
+}, [
+    new \App\middlewares\TesteMiddleware('master')
+]);
 
 // Dispatcher
 $path = $request->getUri()->getPath();
