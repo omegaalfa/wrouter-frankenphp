@@ -5,12 +5,12 @@ Wants=network-online.target
 Requires=docker.service
 
 [Service]
-Type=oneshot
+Type=exec
 WorkingDirectory=/home/ubuntu/wrouter-frankenphp
-ExecStart=/bin/sh -c '/usr/bin/docker compose -f docker-compose.prod.yml up -d --build'
-ExecStop=/bin/sh -c '/usr/bin/docker compose -f docker-compose.prod.yml down'
-RemainAfterExit=yes
+ExecStart=/usr/bin/docker compose -f docker-compose.prod.yml up -d --build
+ExecStop=/usr/bin/docker compose -f docker-compose.prod.yml down
 TimeoutStartSec=0
+RemainAfterExit=yes
 Restart=on-failure
 RestartSec=10s
 
