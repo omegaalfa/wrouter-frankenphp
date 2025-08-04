@@ -15,6 +15,13 @@ if [ ! -f "$SERVICE_SRC" ]; then
   exit 1
 fi
 
+#verifica .env
+if [ -f .env ]; then
+  echo "✅ Arquivo .env encontrado."
+else
+  echo "❌ Arquivo .env não encontrado."
+fi
+
 # Copia o service para o systemd
 sudo cp "$SERVICE_SRC" "$SERVICE_DST"
 sudo systemctl daemon-reload
